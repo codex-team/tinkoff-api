@@ -4,7 +4,7 @@ const bankApi = new TinkoffAPI(process.env.TINKOFF_TERMINAL_KEY, process.env.TIN
 
 
 bankApi.init({
-  Amount: '100000',
+  Amount: '10000',
   OrderId: '123',
   DATA: {
     Email: 'user@ya.ru',
@@ -26,7 +26,6 @@ bankApi.init({
     ]
   }
 }).then(res => {
-  // console.log(bankApi.checkNotificationRequest(res))
   console.log(res);
 }).catch(err => {
   console.log(err)
