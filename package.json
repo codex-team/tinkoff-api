@@ -1,0 +1,26 @@
+{
+  "name": "tinkoff-api",
+  "version": "0.1.0",
+  "description": "Tinkoff Merchant API",
+  "main": "test.js",
+  "scripts": {
+    "test": "jest --coverage --silent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codex-team/tinkoff-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codex-team/tinkoff-api/issues"
+  },
+  "homepage": "https://github.com/codex-team/tinkoff-api#readme",
+  "dependencies": {
+    "debug": "^2.6.8",
+    "dotenv": "^8.1.0",
+    "lodash": "^4.17.4",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
