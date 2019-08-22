@@ -1,10 +1,9 @@
-const debug = require('debug')('tinkoff-merchant');
-const crypto = require('crypto');
-const _ = require('lodash');
-const request = require('request');
+const debug = require("debug")("tinkoff-merchant");
+const crypto = require("crypto");
+const _ = require("lodash");
+const axios = require("axios");
 
 class TinkoffAPI {
-
   /**
    * Constructor
    * @param {String} terminalKey Unique terminal identifier
@@ -24,8 +23,10 @@ class TinkoffAPI {
    * @param {Object} params Params for Init method except TerminalKey and Token
    * @returns {Promise}
    */
-  init(params) {
-    return this.checkInitRequest(params).then((params) => this.requestMethod('Init', params));
+  async init(params) {
+    this.checkInitRequest(params);
+
+    return this.requestMethod("Init", params);
   }
 
   /**
@@ -34,7 +35,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   confirm(params) {
-    return this.requestMethod('Confirm', params);
+    return this.requestMethod("Confirm", params);
   }
 
   /**
@@ -43,7 +44,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   cancel(params) {
-    return this.requestMethod('Cancel', params);
+    return this.requestMethod("Cancel", params);
   }
 
   /**
@@ -52,7 +53,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   getState(params) {
-    return this.requestMethod('GetState', params);
+    return this.requestMethod("GetState", params);
   }
 
   /**
@@ -61,7 +62,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   resend(params) {
-    return this.requestMethod('Resend', params);
+    return this.requestMethod("Resend", params);
   }
 
   /**
@@ -70,38 +71,29 @@ class TinkoffAPI {
    * @param {Object} params Params for method except TerminalKey and Token
    * @returns {Promise}
    */
-  requestMethod(methodName, params) {
+  async requestMethod(methodName, params) {
     const methodUrl = `${this.apiUrl}${methodName}`;
-    const methodParams = Object.assign({}, params);
-    methodParams.TerminalKey = this.terminalKey;
+    const methodParams = {
+      ...params,
+      TerminalKey: this.terminalKey
+    };
+
     methodParams.Token = this.generateToken(methodParams);
 
-    const requestPromise = new Promise((resolve, reject) => {
-      debug('send \'%s\' with %o', methodName, methodParams);
+    debug("send '%s' with %o", methodName, methodParams);
 
-      request({
-        uri: methodUrl,
-        method: 'POST',
-        body: methodParams,
-        json: true,
-        gzip: true,
-        timeout: 25000
-      }, (err, response, body) => {
-        if (err) {
-          reject(err);
-        } else {
-          if (response.statusCode == 200) {
-            if (!body.Success) {
-              reject(`[Error code is ${body.ErrorCode}] ${JSON.stringify(body)}`)
-            }
-            resolve(body);
-          }
-          reject(`[Error code is ${response.statusCode}] ${body}`);
-        }
-      });
+    const response = await axios.post(methodUrl, methodParams, {
+      json: true,
+      timeout: 25000
     });
 
-    return requestPromise;
+    if (response.status != 200) {
+      throw new Error(
+        `[Error code is ${response.status}] ${JSON.stringify(response.data)}`
+      );
+    }
+
+    return response.data;
   }
 
   /**
@@ -115,22 +107,39 @@ class TinkoffAPI {
     tokenParams.Password = this.secretKey;
     const pairs = _.toPairs(tokenParams);
     const sortedPairs = _.sortBy(pairs, pair => pair[0]);
-    const concatenatedValues = _.reduce(sortedPairs, (result, pair) => result + pair[1], '');
-    const token = crypto.createHash('sha256').update(concatenatedValues).digest('hex');
+    const concatenatedValues = _.reduce(
+      sortedPairs,
+      (result, pair) => result + pair[1],
+      ""
+    );
+    const token = crypto
+      .createHash("sha256")
+      .update(concatenatedValues)
+      .digest("hex");
     debug(`generateToken digest is ${token}`);
 
     return token;
   }
 
-  checkInitRequest(params) {
-    return new Promise((resolve, reject) => {
-      if (!(params.Amount)) { return reject("Not specified `Amount` parameter: order amount as number in kopecks"); }
-      if (!(params.OrderId)) { return reject("Not specified `OrderId` parameter: unique order identifier"); }
+  /**
+   * Check parameters for init request
+   * @param {object} params
+   * @returns {object} params
+   */
+  async checkInitRequest(params) {
+    if (!params.Amount) {
+      return new Error(
+        "Not specified `Amount` parameter: order amount as number in kopecks"
+      );
+    }
+    if (!params.OrderId) {
+      return new Error(
+        "Not specified `OrderId` parameter: unique order identifier"
+      );
+    }
 
-      return resolve(params);
-    });
+    return params;
   }
-
 }
 
 module.exports = TinkoffAPI;
