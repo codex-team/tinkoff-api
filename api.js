@@ -116,7 +116,11 @@ class TinkoffAPI {
    * @returns {String} SHA-256 digest Token
    */
   generateToken(params) {
-    const tokenParams = Object.assign({}, params);
+    let tokenParams = {
+      ...params
+    };
+    delete tokenParams.Receipt;
+    delete tokenParams.Data;
 
     tokenParams.Password = this.secretKey;
     const pairs = _.toPairs(tokenParams);
