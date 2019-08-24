@@ -3,6 +3,9 @@ const crypto = require('crypto');
 const _ = require('lodash');
 const axios = require('axios');
 
+/**
+ * Tinkoff API connector
+ */
 class TinkoffAPI {
   /**
    * Constructor
@@ -12,8 +15,8 @@ class TinkoffAPI {
   constructor(terminalKey, secretKey) {
     // Api endpoint
     this.apiUrl = 'https://securepay.tinkoff.ru/v2/';
-    // Access timeout in milliseconds
-    this.timeout = 25000;
+    // Access timeout in milliseconds (10 seconds)
+    this.timeout = 10000;
 
     this.terminalKey = terminalKey;
     this.secretKey = secretKey;
@@ -100,9 +103,7 @@ class TinkoffAPI {
     }
 
     if (!response.data.Success) {
-      throw new Error(
-        `[${response.data.Message}] ${JSON.stringify(response.data)}`
-      );
+      debug(`Error: [${response.data.Message}] ${JSON.stringify(response.data)}`);
     }
 
     return response.data;
