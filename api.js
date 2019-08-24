@@ -96,7 +96,7 @@ class TinkoffAPI {
       timeout: this.timeout
     });
 
-    if (response.status != 200) {
+    if (response.status !== 200) {
       throw new Error(
         `[Error code is ${response.status}] ${JSON.stringify(response.data)}`
       );
@@ -121,6 +121,7 @@ class TinkoffAPI {
     };
     delete tokenParams.Receipt;
     delete tokenParams.Data;
+    delete tokenParams.Token;
 
     tokenParams.Password = this.secretKey;
     const pairs = _.toPairs(tokenParams);
@@ -130,6 +131,7 @@ class TinkoffAPI {
       (result, pair) => result + pair[1],
       ''
     );
+
     const token = crypto
       .createHash('sha256')
       .update(concatenatedValues)
