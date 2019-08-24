@@ -29,9 +29,9 @@ class TinkoffAPI {
    * @param {Object} params Params for Init method except TerminalKey and Token
    * @returns {Object} response from Tinkoff API
    */
-  async init(params) {
+  async initPayment(params) {
     try {
-      await this.checkInitRequest(params);
+      await this.checkInitPayment(params);
       return await this.requestMethod('Init', params);
     } catch (error) {
       debug(`${error}`);
@@ -43,7 +43,7 @@ class TinkoffAPI {
    * @param {Object} params Params for Confirm method except TerminalKey and Token
    * @returns {Promise}
    */
-  confirm(params) {
+  confirmPayment(params) {
     return this.requestMethod('Confirm', params);
   }
 
@@ -52,7 +52,7 @@ class TinkoffAPI {
    * @param {Object} params Params for Cancel method except TerminalKey and Token
    * @returns {Promise}
    */
-  cancel(params) {
+  cancelPayment(params) {
     return this.requestMethod('Cancel', params);
   }
 
@@ -61,7 +61,7 @@ class TinkoffAPI {
    * @param {Object} params Params for GetState method except TerminalKey and Token
    * @returns {Promise}
    */
-  getState(params) {
+  paymentState(params) {
     return this.requestMethod('GetState', params);
   }
 
@@ -70,7 +70,7 @@ class TinkoffAPI {
    * @param {Object} params Params for Resend method except TerminalKey and Token
    * @returns {Promise}
    */
-  resend(params) {
+  resendPayment(params) {
     return this.requestMethod('Resend', params);
   }
 
@@ -116,7 +116,7 @@ class TinkoffAPI {
    * @returns {String} SHA-256 digest Token
    */
   generateToken(params) {
-    let tokenParams = {
+    const tokenParams = {
       ...params
     };
     delete tokenParams.Receipt;
@@ -145,7 +145,7 @@ class TinkoffAPI {
    * @param {object} params
    * @returns {object} params
    */
-  async checkInitRequest(params) {
+  async checkInitPayment(params) {
     if (!params.Amount) {
       throw new Error(
         'Not specified `Amount` parameter: order amount as number in kopecks'
