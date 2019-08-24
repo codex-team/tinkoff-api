@@ -1,7 +1,7 @@
-const debug = require("debug")("tinkoff-merchant");
-const crypto = require("crypto");
-const _ = require("lodash");
-const axios = require("axios");
+const debug = require('debug')('tinkoff-merchant');
+const crypto = require('crypto');
+const _ = require('lodash');
+const axios = require('axios');
 
 class TinkoffAPI {
   /**
@@ -11,7 +11,7 @@ class TinkoffAPI {
    */
   constructor(terminalKey, secretKey) {
     // Api endpoint
-    this.apiUrl = "https://securepay.tinkoff.ru/v2/";
+    this.apiUrl = 'https://securepay.tinkoff.ru/v2/';
     // Access timeout in milliseconds
     this.timeout = 25000;
 
@@ -29,7 +29,7 @@ class TinkoffAPI {
   async init(params) {
     try {
       await this.checkInitRequest(params);
-      return await this.requestMethod("Init", params);
+      return await this.requestMethod('Init', params);
     } catch (error) {
       debug(`${error}`);
     }
@@ -41,7 +41,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   confirm(params) {
-    return this.requestMethod("Confirm", params);
+    return this.requestMethod('Confirm', params);
   }
 
   /**
@@ -50,7 +50,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   cancel(params) {
-    return this.requestMethod("Cancel", params);
+    return this.requestMethod('Cancel', params);
   }
 
   /**
@@ -59,7 +59,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   getState(params) {
-    return this.requestMethod("GetState", params);
+    return this.requestMethod('GetState', params);
   }
 
   /**
@@ -68,7 +68,7 @@ class TinkoffAPI {
    * @returns {Promise}
    */
   resend(params) {
-    return this.requestMethod("Resend", params);
+    return this.requestMethod('Resend', params);
   }
 
   /**
@@ -102,7 +102,7 @@ class TinkoffAPI {
     if (!response.data.Success) {
       throw new Error(
         `[${response.data.Message}] ${JSON.stringify(response.data)}`
-      )
+      );
     }
 
     return response.data;
@@ -116,18 +116,20 @@ class TinkoffAPI {
    */
   generateToken(params) {
     const tokenParams = Object.assign({}, params);
+
     tokenParams.Password = this.secretKey;
     const pairs = _.toPairs(tokenParams);
     const sortedPairs = _.sortBy(pairs, pair => pair[0]);
     const concatenatedValues = _.reduce(
       sortedPairs,
       (result, pair) => result + pair[1],
-      ""
+      ''
     );
     const token = crypto
-      .createHash("sha256")
+      .createHash('sha256')
       .update(concatenatedValues)
-      .digest("hex");
+      .digest('hex');
+
     debug(`generateToken digest is ${token}`);
 
     return token;
@@ -141,12 +143,12 @@ class TinkoffAPI {
   async checkInitRequest(params) {
     if (!params.Amount) {
       throw new Error(
-        "Not specified `Amount` parameter: order amount as number in kopecks"
+        'Not specified `Amount` parameter: order amount as number in kopecks'
       );
     }
     if (!params.OrderId) {
       throw new Error(
-        "Not specified `OrderId` parameter: unique order identifier"
+        'Not specified `OrderId` parameter: unique order identifier'
       );
     }
   }

@@ -2,9 +2,10 @@
   "name": "tinkoff-api",
   "version": "0.1.0",
   "description": "Tinkoff Merchant API",
-  "main": "test.js",
+  "main": "api.js",
   "scripts": {
-    "test": "jest --coverage --silent"
+    "test": "jest --coverage --silent",
+    "lint": "eslint . --ext .js --fix"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "eslint": "^6.2.2",
+    "eslint-config-codex": "github:codex-team/eslint-config",
     "jest": "^24.9.0"
   }
 }

@@ -1,7 +1,7 @@
 const TinkoffAPI = require('./api');
+
 require('dotenv').config();
 const bankApi = new TinkoffAPI(process.env.TINKOFF_TERMINAL_KEY, process.env.TINKOFF_SECRET_KEY);
-
 
 bankApi.init({
   Amount: '10000',
@@ -28,5 +28,5 @@ bankApi.init({
 }).then(res => {
   console.log(res);
 }).catch(err => {
-  console.log(err)
+  console.log(err);
 });
