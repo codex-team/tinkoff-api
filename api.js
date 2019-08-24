@@ -12,21 +12,27 @@ class TinkoffAPI {
   constructor(terminalKey, secretKey) {
     // Api endpoint
     this.apiUrl = "https://securepay.tinkoff.ru/v2/";
+    // Access timeout in milliseconds
+    this.timeout = 25000;
+
     this.terminalKey = terminalKey;
     this.secretKey = secretKey;
 
-    debug(`initialized with terminalKey=${this.terminalKey}`);
+    debug(`Initialized with terminalKey=${this.terminalKey}`);
   }
 
   /**
    * Initialize the payment
    * @param {Object} params Params for Init method except TerminalKey and Token
-   * @returns {Promise}
+   * @returns {Object} response from Tinkoff API
    */
   async init(params) {
-    this.checkInitRequest(params);
-
-    return this.requestMethod("Init", params);
+    try {
+      await this.checkInitRequest(params);
+      return await this.requestMethod("Init", params);
+    } catch (error) {
+      debug(`${error}`);
+    }
   }
 
   /**
@@ -69,7 +75,7 @@ class TinkoffAPI {
    * Request API method
    * @param {String} methodName Method name
    * @param {Object} params Params for method except TerminalKey and Token
-   * @returns {Promise}
+   * @returns {Object} response from Tinkoff API
    */
   async requestMethod(methodName, params) {
     const methodUrl = `${this.apiUrl}${methodName}`;
@@ -80,17 +86,23 @@ class TinkoffAPI {
 
     methodParams.Token = this.generateToken(methodParams);
 
-    debug("send '%s' with %o", methodName, methodParams);
+    debug("Send '%s' with %o", methodName, methodParams);
 
     const response = await axios.post(methodUrl, methodParams, {
       json: true,
-      timeout: 25000
+      timeout: this.timeout
     });
 
     if (response.status != 200) {
       throw new Error(
         `[Error code is ${response.status}] ${JSON.stringify(response.data)}`
       );
+    }
+
+    if (!response.data.Success) {
+      throw new Error(
+        `[${response.data.Message}] ${JSON.stringify(response.data)}`
+      )
     }
 
     return response.data;
@@ -128,17 +140,15 @@ class TinkoffAPI {
    */
   async checkInitRequest(params) {
     if (!params.Amount) {
-      return new Error(
+      throw new Error(
         "Not specified `Amount` parameter: order amount as number in kopecks"
       );
     }
     if (!params.OrderId) {
-      return new Error(
+      throw new Error(
         "Not specified `OrderId` parameter: unique order identifier"
       );
     }
-
-    return params;
   }
 }
 
