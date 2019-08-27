@@ -39,6 +39,51 @@ class TinkoffAPI {
   }
 
   /**
+   * Add customer to the shop
+   * @param params
+   * @return {Promise<*>}
+   */
+  addCustomer(params) {
+    return this.requestMethod('AddCustomer', params);
+  }
+
+  /**
+   * Get customer info
+   * @param params
+   * @return {Promise<*>}
+   */
+  getCustomer(params) {
+    return this.requestMethod('GetCustomer', params);
+  }
+
+  /**
+   * Remove customer
+   * @param params
+   * @return {Promise<*>}
+   */
+  removeCustomer(params) {
+    return this.requestMethod('RemoveCustomer', params);
+  }
+
+  /**
+   * Get customer's cards info
+   * @param params
+   * @return {Promise<*>}
+   */
+  getCardList(params) {
+    return this.requestMethod('GetCardList', params);
+  }
+
+  /**
+   * Charge
+   * @param params
+   * @return {Promise<*>}
+   */
+  charge(params) {
+    return this.requestMethod('Charge', params);
+  }
+
+  /**
    * Confirm 2-staged payment
    * @param {Object} params Params for Confirm method except TerminalKey and Token
    * @returns {Promise}
@@ -70,7 +115,7 @@ class TinkoffAPI {
    * @param {Object} params Params for Resend method except TerminalKey and Token
    * @returns {Promise}
    */
-  resendPayment(params) {
+  async resendPayment(params) {
     return this.requestMethod('Resend', params);
   }
 
