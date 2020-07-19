@@ -1,4 +1,4 @@
-const TinkoffAPI = require('./api');
+const TinkoffAPI = require('./index');
 
 describe('TokenGenerationTest', () => {
   const api = new TinkoffAPI('TerminalExample', '123456');
