@@ -2,7 +2,7 @@
   "name": "tinkoff-api",
   "version": "0.1.1",
   "description": "Tinkoff Merchant API",
-  "main": "api.js",
+  "main": "api.ts",
   "scripts": {
     "test": "jest --coverage --silent",
     "lint": "eslint . --ext .js,.ts --fix"
