@@ -16,7 +16,7 @@ export interface CancelPaymentRequest {
   PaymentId: number;
 
   /**
-   * Amount in cents
+   * Amount in kopecks
    */
   Amount?: number;
 
@@ -83,12 +83,12 @@ export interface CancelPaymentResponse {
   Details?: string;
 
   /**
-   * Amount before cancel in cents
+   * Amount before cancel in kopecks
    */
   OriginalAmount: number;
 
   /**
-   * Amount after cancel in cents
+   * Amount after cancel in kopecks
    */
   NewAmount: number;
 }

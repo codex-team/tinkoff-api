@@ -45,7 +45,7 @@ export interface ChargeResponse {
   TerminalKey: string;
 
   /**
-   * Amount in cents
+   * Amount in kopecks
    */
   Amount: number;
 

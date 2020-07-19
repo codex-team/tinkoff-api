@@ -16,7 +16,7 @@ export interface ConfirmPaymentRequest {
   PaymentId: number;
 
   /**
-   * Amount in cents
+   * Amount in kopecks
    */
   Amount?: number;
 

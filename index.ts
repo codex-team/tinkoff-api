@@ -74,7 +74,7 @@ export default class TinkoffAPI {
    *
    * @param params - params for Init method except TerminalKey and Token
    */
-  public async initPayment(params: InitPaymentRequest): Promise<InitPaymentResponse> {
+  public async initPayment(params: InitPaymentRequest): Promise<InitPaymentResponse | undefined> {
     try {
       this.checkInitPayment(params);
 
@@ -200,7 +200,7 @@ export default class TinkoffAPI {
 
     methodParams.Token = this.generateToken(methodParams);
 
-    debug("Send '%s' with %o", methodName, methodParams);
+    debug(`Send '${methodName}' with ${methodParams}`);
 
     const response = await axios.post(methodUrl, methodParams, {
       timeout: this.timeout,
@@ -226,15 +226,24 @@ export default class TinkoffAPI {
    * @param params - method parameters (key-value) excluding Receipt and DATA
    */
   private generateToken(params: Request): string {
-    const tokenParams = {
+    let tokenParams: Request & {Password?: string} = {
       ...params,
     };
 
-    delete tokenParams['Receipt'];
-    delete tokenParams['DATA'];
-    delete tokenParams['Token'];
+    if ('Receipt' in tokenParams) {
+      delete tokenParams.Receipt;
+    }
+    if ('DATA' in tokenParams) {
+      delete tokenParams['DATA'];
+    }
+    if ('Token' in tokenParams) {
+      delete tokenParams['Token'];
+    }
 
-    tokenParams['Password'] = this.secretKey;
+    tokenParams = {
+      ...tokenParams,
+      Password: this.secretKey,
+    };
     const pairs = _.toPairs(tokenParams);
     const sortedPairs = _.sortBy(pairs, pair => pair[0]);
     const concatenatedValues = _.reduce(

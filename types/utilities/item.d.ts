@@ -14,7 +14,7 @@ export interface Item {
   Name: string;
 
   /**
-   * Unit price in cents
+   * Unit price in kopecks
    */
   Price: number;
 
@@ -24,7 +24,7 @@ export interface Item {
   Quantity: number;
 
   /**
-   * Product cost in cents (Price * Quantity)
+   * Product cost in kopecks (Price * Quantity)
    */
   Amount: number;
 

@@ -13,7 +13,7 @@ export interface InitPaymentRequest {
   TerminalKey?: string;
 
   /**
-   * Amount in cents
+   * Amount in kopecks
    */
   Amount?: number;
 
@@ -102,7 +102,7 @@ export interface InitPaymentResponse {
   TerminalKey: string;
 
   /**
-   * Amount in cents
+   * Amount in kopecks
    */
   Amount: number;
 
