@@ -47,7 +47,7 @@
      */
     "paths": {
       "*": [
-        "./types/*"
+        "./src/types/*"
       ]
     },
 
@@ -71,6 +71,6 @@
   },
 
   "include": [
-    "index.ts"
+    "./src/index.ts"
   ]
 }

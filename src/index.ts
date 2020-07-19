@@ -32,22 +32,22 @@ import {
  */
 export default class TinkoffAPI {
   /**
-   *
+   * Tinkoff API endpoint
    */
   private readonly apiUrl: string;
 
   /**
-   *
+   * Timeout for request
    */
   private readonly timeout: number;
 
   /**
-   *
+   * Tinkoff terminal key
    */
   private readonly terminalKey: string;
 
   /**
-   *
+   * Tinkoff secret key
    */
   private readonly secretKey: string;
 
