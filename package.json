@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/codex-team/tinkoff-api#readme",
   "dependencies": {
+    "@types/node": "^14.0.23",
     "axios": "^0.19.0",
     "debug": "^2.6.8",
     "dotenv": "^8.1.0",
