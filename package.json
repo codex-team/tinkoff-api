@@ -5,7 +5,7 @@
   "main": "api.js",
   "scripts": {
     "test": "jest --coverage --silent",
-    "lint": "eslint . --ext .js --fix"
+    "lint": "eslint . --ext .js,.ts --fix"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "eslint": "^6.2.2",
-    "eslint-config-codex": "github:codex-team/eslint-config",
+    "eslint-config-codex": "1.2.4",
+    "typescript": "^3.9.7",
     "jest": "^24.9.0"
   }
 }
