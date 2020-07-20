@@ -225,7 +225,7 @@ export default class TinkoffAPI {
    *
    * @param params - method parameters (key-value) excluding Receipt and DATA
    */
-  private generateToken(params: Request): string {
+  public generateToken(params: Request): string {
     let tokenParams: Request & {Password?: string} = {
       ...params,
     };

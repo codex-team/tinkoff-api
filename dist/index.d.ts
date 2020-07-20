@@ -1,4 +1,4 @@
-import { InitPaymentRequest, InitPaymentResponse, AddCustomerRequest, AddCustomerResponse, GetCustomerRequest, GetCustomerResponse, RemoveCustomerRequest, RemoveCustomerResponse, GetCardListRequest, GetCardListResponse, ChargeRequest, ChargeResponse, ConfirmPaymentRequest, ConfirmPaymentResponse, CancelPaymentRequest, CancelPaymentResponse, PaymentStateRequest, PaymentStateResponse, ResendPaymentRequest, ResendPaymentResponse } from './types';
+import { Request, InitPaymentRequest, InitPaymentResponse, AddCustomerRequest, AddCustomerResponse, GetCustomerRequest, GetCustomerResponse, RemoveCustomerRequest, RemoveCustomerResponse, GetCardListRequest, GetCardListResponse, ChargeRequest, ChargeResponse, ConfirmPaymentRequest, ConfirmPaymentResponse, CancelPaymentRequest, CancelPaymentResponse, PaymentStateRequest, PaymentStateResponse, ResendPaymentRequest, ResendPaymentResponse } from './types';
 /**
  * Tinkoff API connector
  */
@@ -99,7 +99,7 @@ export default class TinkoffAPI {
      *
      * @param params - method parameters (key-value) excluding Receipt and DATA
      */
-    private generateToken;
+    generateToken(params: Request): string;
     /**
      * Check parameters for init request
      *

@@ -1,4 +1,4 @@
-const TinkoffAPI = require('./index');
+import TinkoffAPI from '../dist';
 
 describe('TokenGenerationTest', () => {
   const api = new TinkoffAPI('TerminalExample', '123456');
@@ -18,7 +18,7 @@ describe('TokenGenerationTest', () => {
       Amount: '100000',
       TerminalKey: 'TinkoffBankTest',
       OrderId: 'TokenExample',
-      Data: {
+      DATA: {
         User: 'user',
         Phone: '12345',
       },
