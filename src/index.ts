@@ -186,40 +186,6 @@ export default class TinkoffAPI {
   }
 
   /**
-   * Request API method
-   *
-   * @param methodName - method name
-   * @param params - params for method except TerminalKey and Token
-   */
-  private async requestMethod(methodName: string, params: Request): Promise<Response> {
-    const methodUrl = `${this.apiUrl}${methodName}`;
-    const methodParams = {
-      ...params,
-      TerminalKey: this.terminalKey,
-    };
-
-    methodParams.Token = this.generateToken(methodParams);
-
-    debug(`Send '${methodName}' with ${methodParams}`);
-
-    const response = await axios.post(methodUrl, methodParams, {
-      timeout: this.timeout,
-    });
-
-    if (response.status !== 200) {
-      throw new Error(
-        `[Error code is ${response.status}] ${JSON.stringify(response.data)}`
-      );
-    }
-
-    if (!response.data.Success) {
-      debug(`Error: [${response.data.Message}] ${JSON.stringify(response.data)}`);
-    }
-
-    return response.data;
-  }
-
-  /**
    * Generate signature token
    * Docs: https://oplata.tinkoff.ru/develop/api/request-sign/
    *
@@ -260,6 +226,40 @@ export default class TinkoffAPI {
     debug(`generateToken digest is ${token}`);
 
     return token;
+  }
+
+  /**
+   * Request API method
+   *
+   * @param methodName - method name
+   * @param params - params for method except TerminalKey and Token
+   */
+  private async requestMethod(methodName: string, params: Request): Promise<Response> {
+    const methodUrl = `${this.apiUrl}${methodName}`;
+    const methodParams = {
+      ...params,
+      TerminalKey: this.terminalKey,
+    };
+
+    methodParams.Token = this.generateToken(methodParams);
+
+    debug(`Send '${methodName}' with ${methodParams}`);
+
+    const response = await axios.post(methodUrl, methodParams, {
+      timeout: this.timeout,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(
+        `[Error code is ${response.status}] ${JSON.stringify(response.data)}`
+      );
+    }
+
+    if (!response.data.Success) {
+      debug(`Error: [${response.data.Message}] ${JSON.stringify(response.data)}`);
+    }
+
+    return response.data;
   }
 
   /**

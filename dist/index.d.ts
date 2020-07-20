@@ -87,19 +87,19 @@ export default class TinkoffAPI {
      */
     resendPayment(params: ResendPaymentRequest): Promise<ResendPaymentResponse>;
     /**
-     * Request API method
-     *
-     * @param methodName - method name
-     * @param params - params for method except TerminalKey and Token
-     */
-    private requestMethod;
-    /**
      * Generate signature token
      * Docs: https://oplata.tinkoff.ru/develop/api/request-sign/
      *
      * @param params - method parameters (key-value) excluding Receipt and DATA
      */
     generateToken(params: Request): string;
+    /**
+     * Request API method
+     *
+     * @param methodName - method name
+     * @param params - params for method except TerminalKey and Token
+     */
+    private requestMethod;
     /**
      * Check parameters for init request
      *

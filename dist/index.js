@@ -180,30 +180,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             });
         }
         /**
-         * Request API method
-         *
-         * @param methodName - method name
-         * @param params - params for method except TerminalKey and Token
-         */
-        requestMethod(methodName, params) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const methodUrl = `${this.apiUrl}${methodName}`;
-                const methodParams = Object.assign(Object.assign({}, params), { TerminalKey: this.terminalKey });
-                methodParams.Token = this.generateToken(methodParams);
-                debug_1.default(`Send '${methodName}' with ${methodParams}`);
-                const response = yield axios_1.default.post(methodUrl, methodParams, {
-                    timeout: this.timeout,
-                });
-                if (response.status !== 200) {
-                    throw new Error(`[Error code is ${response.status}] ${JSON.stringify(response.data)}`);
-                }
-                if (!response.data.Success) {
-                    debug_1.default(`Error: [${response.data.Message}] ${JSON.stringify(response.data)}`);
-                }
-                return response.data;
-            });
-        }
-        /**
          * Generate signature token
          * Docs: https://oplata.tinkoff.ru/develop/api/request-sign/
          *
@@ -230,6 +206,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
                 .digest('hex');
             debug_1.default(`generateToken digest is ${token}`);
             return token;
+        }
+        /**
+         * Request API method
+         *
+         * @param methodName - method name
+         * @param params - params for method except TerminalKey and Token
+         */
+        requestMethod(methodName, params) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const methodUrl = `${this.apiUrl}${methodName}`;
+                const methodParams = Object.assign(Object.assign({}, params), { TerminalKey: this.terminalKey });
+                methodParams.Token = this.generateToken(methodParams);
+                debug_1.default(`Send '${methodName}' with ${methodParams}`);
+                const response = yield axios_1.default.post(methodUrl, methodParams, {
+                    timeout: this.timeout,
+                });
+                if (response.status !== 200) {
+                    throw new Error(`[Error code is ${response.status}] ${JSON.stringify(response.data)}`);
+                }
+                if (!response.data.Success) {
+                    debug_1.default(`Error: [${response.data.Message}] ${JSON.stringify(response.data)}`);
+                }
+                return response.data;
+            });
         }
         /**
          * Check parameters for init request
