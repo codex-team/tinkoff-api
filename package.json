@@ -2,10 +2,14 @@
   "name": "tinkoff-api",
   "version": "0.1.1",
   "description": "Tinkoff Merchant API",
-  "main": "api.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "jest --coverage --silent",
-    "lint": "eslint . --ext .js --fix"
+    "build": "yarn clean && tsc",
+    "build:watch": "yarn clean && tsc-watch",
+    "lint": "eslint -c ./.eslintrc.js ./src --ext .ts,.js --fix",
+    "lint:test": "eslint -c ./.eslintrc.js ./src --ext .ts,.js",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -22,8 +26,19 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/debug": "^4.1.5",
+    "@types/jest": "^26.0.5",
+    "@types/lodash": "^4.14.157",
+    "@types/node": "^14.0.23",
+    "babel-jest": "^26.1.0",
     "eslint": "^6.2.2",
-    "eslint-config-codex": "github:codex-team/eslint-config",
-    "jest": "^24.9.0"
+    "eslint-config-codex": "1.2.4",
+    "jest": "^24.9.0",
+    "ts-jest": "^26.1.3",
+    "ts-watch": "^1.0.8",
+    "typescript": "^3.9.7"
   }
 }

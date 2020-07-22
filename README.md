@@ -1,5 +1,7 @@
-## Example usage
+# Tinkoff API SDK
+Simple SDK for Tinkoff API.
 
+## Example usage
 ```nodejs
 const TinkoffAPI = require('./api');
 require('dotenv').config();
@@ -46,4 +48,10 @@ bankApi.init({
   OrderId: '123',
   Amount: 10000,
   PaymentURL: 'https://securepay.tinkoff.ru/new/...' }
+```
+
+## Run tests
+Execute this command:
+```shell script
+yarn jest
 ```
