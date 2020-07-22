@@ -1,4 +1,4 @@
-import { Request, InitPaymentRequest, InitPaymentResponse, AddCustomerRequest, AddCustomerResponse, GetCustomerRequest, GetCustomerResponse, RemoveCustomerRequest, RemoveCustomerResponse, GetCardListRequest, GetCardListResponse, ChargeRequest, ChargeResponse, ConfirmPaymentRequest, ConfirmPaymentResponse, CancelPaymentRequest, CancelPaymentResponse, PaymentStateRequest, PaymentStateResponse, ResendPaymentRequest, ResendPaymentResponse } from './types';
+import { Request, InitPaymentRequest, InitPaymentResponse, AddCustomerRequest, AddCustomerResponse, GetCustomerRequest, GetCustomerResponse, RemoveCustomerRequest, RemoveCustomerResponse, GetCardListRequest, GetCardListResponse, ChargeRequest, ChargeResponse, ConfirmPaymentRequest, ConfirmPaymentResponse, CancelPaymentRequest, CancelPaymentResponse, PaymentStateRequest, PaymentStateResponse, ResendPaymentRequest, ResendPaymentResponse } from './types/index';
 /**
  * Tinkoff API connector
  */
