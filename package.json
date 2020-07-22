@@ -5,11 +5,12 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && tsc && yarn copy-definitions",
     "build:watch": "yarn clean && tsc-watch",
     "lint": "eslint -c ./.eslintrc.js ./src --ext .ts,.js --fix",
     "lint:test": "eslint -c ./.eslintrc.js ./src --ext .ts,.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "copy-definitions": "copyfiles -u 1 \"src/**/*.d.ts\" dist"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,9 @@
     "@types/debug": "^4.1.5",
     "@types/jest": "^26.0.5",
     "@types/lodash": "^4.14.157",
-    "@types/node": "^14.0.23",
+    "@types/node": "^14.0.24",
     "babel-jest": "^26.1.0",
+    "copyfiles": "^2.3.0",
     "eslint": "^6.2.2",
     "eslint-config-codex": "1.2.4",
     "jest": "^24.9.0",

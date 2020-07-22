@@ -25,7 +25,7 @@ import {
   PaymentStateResponse,
   ResendPaymentRequest,
   ResendPaymentResponse
-} from './types';
+} from './types/index';
 
 /**
  * Tinkoff API connector

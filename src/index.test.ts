@@ -6,23 +6,23 @@ describe('TokenGenerationTest', () => {
   test('should return valid sign', () => {
     expect(api.generateToken({
       Description: 'test',
-      Amount: '100000',
+      Amount: 100000,
       TerminalKey: 'TinkoffBankTest',
-      OrderId: 'TokenExample',
-    })).toEqual('597c160c8c348fb14c63c820c54b712468923a74fd111ac6b0ecda01fb5f4716');
+      OrderId: 38475456,
+    })).toEqual('730fd3f6f06823d12fa325a286acbd3e8b7b70e2d0dce83d0de3993902932102');
   });
 
   test('should ignore data and receipt fields', () => {
     expect(api.generateToken({
       Description: 'test',
-      Amount: '100000',
+      Amount: 100000,
       TerminalKey: 'TinkoffBankTest',
-      OrderId: 'TokenExample',
+      OrderId: 38475456,
       DATA: {
         User: 'user',
         Phone: '12345',
       },
-    })).toEqual('597c160c8c348fb14c63c820c54b712468923a74fd111ac6b0ecda01fb5f4716');
+    })).toEqual('730fd3f6f06823d12fa325a286acbd3e8b7b70e2d0dce83d0de3993902932102');
   });
 });
 
@@ -32,16 +32,23 @@ describe('TokenNotifyTest', () => {
   test('should return valid token signature', () => {
     expect(api.generateToken({
       TerminalKey: '1321054611234DEMO',
-      OrderId: '201709',
-      Success: 'true',
-      Status: 'AUTHORIZED',
-      PaymentId: '8742591',
-      ErrorCode: '0',
-      Amount: '9855',
-      CardId: '322264',
-      Pan: '430000******0777',
-      ExpDate: '1122',
-      RebillId: '101709',
-    })).toEqual('b906d28e76c6428e37b25fcf86c0adc52c63d503013fdd632e300593d165766b');
+      OrderId: 201709,
+      PaymentId: 8742591,
+      Amount: 9855,
+      RebillId: 101709,
+    })).toEqual('0b4533c60a4e18cf2a79ffcfab29dc05e441c60fba5d338309d14075c66bb4ac');
   });
 });
+
+/*
+ * describe('Send request to Tinkoff API', () => {
+ *   const api = new TinkoffAPI(process.env.TINKOFF_TERMINAL_KEY as string,
+ *     process.env.TINKOFF_SECRET_KEY as string);
+ *
+ *   test('should return response', () => {
+ *     expect(api.initPayment({
+ *
+ *     }));
+ *   });
+ * });
+ */
